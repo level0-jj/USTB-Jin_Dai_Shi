@@ -1,0 +1,2014 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>中国近现代史纲要 · 答题练习</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #f5f2eb;
+      font-family: 'Segoe UI', 'Noto Serif SC', '宋体', '华文宋体', 'Times New Roman', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      margin: 0;
+    }
+    .app-container {
+      width: 100%;
+      max-width: 850px;
+      background: #fffcf5;
+      border-radius: 32px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08), 0 8px 20px rgba(140,100,60,0.15);
+      padding: 28px 30px 32px;
+      border: 1px solid #e8d9c6;
+      transition: all 0.2s ease;
+    }
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 500;
+      color: #4e3620;
+      text-align: center;
+      margin-bottom: 16px;
+      letter-spacing: 2px;
+      border-bottom: 2px solid #dcc8a8;
+      padding-bottom: 12px;
+    }
+    .control-panel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      background: #f9f3e8;
+      padding: 15px 18px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      border: 1px solid #e1cdb5;
+    }
+    .mode-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .mode-btn {
+      background: #fff;
+      border: 1px solid #c7af91;
+      color: #5e4630;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      background: #fefaf5;
+    }
+    .mode-btn.active {
+      background: #b48c5c;
+      color: white;
+      border-color: #8b6842;
+      box-shadow: 0 4px 8px rgba(160,110,50,0.25);
+      font-weight: bold;
+    }
+    .mode-btn:hover {
+      background: #e5d3bb;
+      border-color: #b2906a;
+    }
+    .input-field {
+      padding: 8px 14px;
+      border: 1px solid #cfb595;
+      border-radius: 24px;
+      font-size: 0.9rem;
+      width: 80px;
+      text-align: center;
+      background: white;
+      color: #3e2e1f;
+    }
+    .action-btn {
+      background: #d8bc8c;
+      border: none;
+      color: #3d2b16;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      background: #e7cfaa;
+      border: 1px solid #bb9b70;
+      white-space: nowrap;
+    }
+    .action-btn:hover {
+      background: #d2b07e;
+      border-color: #8f6e47;
+    }
+    .danger-btn {
+      background: #f4e1e1;
+      border-color: #cc9b9b;
+      color: #633;
+    }
+    .danger-btn:hover {
+      background: #e7c9c9;
+    }
+    .question-card {
+      background: #ffffff;
+      border: 2px solid #e6d7c0;
+      border-radius: 28px;
+      padding: 24px 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.04);
+    }
+    .chapter-badge {
+      display: inline-block;
+      background: #dcc8a8;
+      color: #4e3620;
+      padding: 2px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .question-num {
+      font-size: 0.95rem;
+      color: #8b7355;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .question-text {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      color: #2c2416;
+      margin-bottom: 24px;
+      font-weight: 500;
+      word-break: break-word;
+    }
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .option-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 18px;
+      border: 1.5px solid #e0cdb2;
+      border-radius: 18px;
+      background: #fdfaf5;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 1.05rem;
+    }
+    .option-item:hover {
+      background: #f5eddf;
+      border-color: #c6a77a;
+    }
+    .option-item input[type="radio"] {
+      accent-color: #8b6b42;
+      width: 1.2rem;
+      height: 1.2rem;
+      margin: 0;
+      cursor: pointer;
+    }
+    .option-item.selected-wrong {
+      background: #ffe9e9;
+      border-color: #d66;
+      color: #b33;
+    }
+    .option-item.selected-correct {
+      background: #e4f3e0;
+      border-color: #4caf50;
+      color: #2e6b2e;
+    }
+    .option-item.show-correct-answer {
+      background: #e1f5e8;
+      border-color: #388e3c;
+      color: #1f4f1f;
+      font-weight: 500;
+    }
+    .feedback-message {
+      margin-top: 14px;
+      font-weight: 600;
+      font-size: 1rem;
+      min-height: 26px;
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .nav-btn {
+      background: #f2e5d5;
+      border: 1px solid #c7ad8b;
+      color: #4e3a27;
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s;
+      background: #f7efe2;
+      min-width: 80px;
+    }
+    .nav-btn:hover {
+      background: #e3cfb2;
+    }
+    .nav-btn:disabled {
+      opacity: 0.45;
+      pointer-events: none;
+      background: #eee5d8;
+    }
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f5ede1;
+      border-radius: 24px;
+      padding: 12px 20px;
+      margin-top: 16px;
+      font-size: 0.9rem;
+      color: #4a3824;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .badge {
+      background: #cfb595;
+      color: white;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    @media (max-width: 550px) {
+      .app-container {
+        padding: 20px 16px;
+      }
+      .question-text {
+        font-size: 1.15rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app-container">
+  <h1>📖 中国近现代史纲要</h1>
+
+  <div class="control-panel">
+    <div class="mode-group">
+      <button class="mode-btn active" data-mode="sequential">📋 顺序</button>
+      <button class="mode-btn" data-mode="random">🎲 随机</button>
+      <button class="mode-btn" data-mode="unanswered">🆕 未做</button>
+      <button class="mode-btn" data-mode="wrongbook">📕 错题本</button>
+      <button class="mode-btn" data-mode="from">🔢 从题号</button>
+    </div>
+    <input type="number" id="paramInput" class="input-field" placeholder="数量/题号" value="5" min="1">
+    <button id="applyModeBtn" class="action-btn">✅ 应用</button>
+    <button id="resetProgressBtn" class="action-btn danger-btn">🔄 重置进度</button>
+  </div>
+
+  <div class="question-card" id="questionCard">
+    <div id="chapterDisplay" class="chapter-badge" style="display:none;"></div>
+    <div class="question-num" id="questionNumLabel">第 1 / 10 题</div>
+    <div class="question-text" id="questionText">加载中...</div>
+    <div class="options-list" id="optionsContainer"></div>
+    <div class="feedback-message" id="feedbackMsg"></div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="nav-btn" id="prevBtn" disabled>◀ 上一题</button>
+    <button class="nav-btn" id="checkAnswerBtn">🔍 查答案</button>
+    <button class="nav-btn" id="submitBtn">📥 提交</button>
+    <button class="nav-btn" id="nextBtn" disabled>下一题 ▶</button>
+  </div>
+
+  <div class="stats">
+    <span>📊 进度：<span id="progressText">0/0</span></span>
+    <span class="badge" id="modeBadge">顺序模式</span>
+    <span>❌ 错题数：<span id="wrongCount">0</span></span>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ---------- 直接内嵌提供的 JSON 数据 ----------
+    const QUESTION_BANK = [
+  {
+    "chapter": "",
+    "id": "1",
+    "question": "中国共产党一经成立，就始终以（ ）作为党的最高理想与最终目标。",
+    "options": {
+      "A": "消除内乱，打倒军阀",
+      "B": "推翻帝国主义压迫",
+      "C": "铲除私有制度",
+      "D": "实现共产主义"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "",
+    "id": "2",
+    "question": "实现中华民族伟大复兴的根本保证是（ ）",
+    "options": {
+      "A": "坚持人民当家作主",
+      "B": "坚持中国共产党的领导",
+      "C": "坚持反对历史虚无主义",
+      "D": "坚持社会革命"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "",
+    "id": "3",
+    "question": "近代中国革命是在主要矛盾不断激化的基础上发生和发展起来的。请问，这 里所谓的“主要矛盾”指的是（ ）",
+    "options": {
+      "A": "帝国主义和中华民族的矛盾",
+      "B": "封建主义和人民大众的矛盾",
+      "C": "帝国主义和中华民族的矛盾以及封建主义和人民大众的矛盾",
+      "D": "半殖民地和半封建的矛盾"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "",
+    "id": "4",
+    "question": "中国近现代史纲要课程的学习，对于核心事件与阶级关系的认识非常重要。 请问以下论述，哪个表述是正确的（ ）",
+    "options": {
+      "A": "新文化运动是新民主主义革命的伟大开端",
+      "B": "近代中国的资产阶级是先于工人阶级而出现的",
+      "C": "领导权的变化,是区分新旧民主主义革命的根本标志",
+      "D": "革命的根本问题是土地问题"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "",
+    "id": "5",
+    "question": "社会主义发展史是中国近现代史纲要的重要内容。请问以下论述，哪个表述 是正确的（ ）",
+    "options": {
+      "A": "中国进入改革开放和社会主义现代化建设新时期，是以党的十一届三中全会 为标志。",
+      "B": "社会主义制度在中国的基本确立是以新中国的成立为标志。",
+      "C": "1953 年提出党在过渡时期的总路线，在当时被通俗解释为“一体两翼”。其 中的“一体”，是指发展社会主义的工商业。",
+      "D": "新中国成立后，中国共产党和中央人民政府就提出要向社会主义过渡的任 务。"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第一章",
+    "id": "1",
+    "question": "西方列强对中国的侵略，首先和主要的是进行（）",
+    "options": {
+      "A": "政治控制",
+      "B": "军事侵略",
+      "C": "经济掠夺",
+      "D": "文化渗透"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第一章",
+    "id": "2",
+    "question": "1840 年鸦片战争以后，让中国“睡狮”在西方列强的隆隆炮声中逐渐苏醒，中 国人民的民族意识开始普遍觉醒的重大事件是（）",
+    "options": {
+      "A": "日本全面侵华战争",
+      "B": "中日甲午战争",
+      "C": "八国联军侵华战争",
+      "D": "中法战争"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第一章",
+    "id": "3",
+    "question": "近代以来，帝国主义列强不能瓜分和灭亡中国的最根本原因在于（）",
+    "options": {
+      "A": "帝国主义列强之间的矛盾和妥协",
+      "B": "洋务派展开的“自强”、“求富”运动",
+      "C": "民族资产阶级发动的民主革命",
+      "D": "中华民族进行的不屈不挠的反侵略斗争"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第一章",
+    "id": "4",
+    "question": "1843 年，魏源编成《海国图志》。他在书中写道：“是书何以作？曰：为以夷 攻夷而作，为以夷款夷而作，为师夷长技以制夷而作。”魏源所说的夷之“长技”， 主要是指西方的（）",
+    "options": {
+      "A": "民主和政治制度",
+      "B": "教育和人才培养",
+      "C": "军事和科学技术",
+      "D": "宗教和思想文化"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第一章",
+    "id": "5",
+    "question": "甲午战后清政府被迫与日本签署《马关条约》，割让辽东半岛予日本。俄、德、 法三国则以提供“友善劝告”为借口，迫使日本归还辽东，日本则趁机勒索清政 府三千万两白银作为赔偿。三国干涉还辽事件充分表明（）",
+    "options": {
+      "A": "俄、德、法三国是同盟国",
+      "B": "列强维护中国主权独立",
+      "C": "日本已暂时独霸中国",
+      "D": "帝国主义列强之间既存在矛盾又相互勾结"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第一章",
+    "id": "6",
+    "question": "理解中国近代一切社会问题和革命问题的最基本依据是认识（）",
+    "options": {
+      "A": "中国半殖民地半封建的社会性质",
+      "B": "中国近代化的历史过程",
+      "C": "中国近代民族民主革命的性质",
+      "D": "中国近代社会经济结构的变化过程"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第一章",
+    "id": "7",
+    "question": "近代中国的历史表明，要争得民族独立和人民解放必须首先进行（）",
+    "options": {
+      "A": "反对帝国主义侵略的斗争",
+      "B": "反对封建主义压迫的斗争",
+      "C": "反帝反封建的民主革命",
+      "D": "反对资产阶级的社会主义革命"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第一章",
+    "id": "8",
+    "question": "在近代中国，民族资产阶级在政治上的两面性是（）",
+    "options": {
+      "A": "斗争性和进步性",
+      "B": "买办性和反动性",
+      "C": "革命性和妥协性",
+      "D": "保守性和软弱性"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第一章",
+    "id": "9",
+    "question": "近代中国错综复杂的社会矛盾中，最主要的矛盾是（）",
+    "options": {
+      "A": "无产阶级和资产阶级的矛盾",
+      "B": "封建主义和人民大众的矛盾",
+      "C": "农民阶级和地主阶级的矛盾",
+      "D": "帝国主义和中华民族的矛盾"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第一章",
+    "id": "10",
+    "question": "近代中国，一些爱国人士提出了工业救国、教育救国、科学救国等主张，并 为此进行了不懈努力，但这些主张并不能从根本上给濒临危亡的中国指明正确的 出路，这是因为他们没有认识到（）",
+    "options": {
+      "A": "争取民族独立和人民解放是实现民族复兴的前提",
+      "B": "中国已经被卷入世界资本主义经济体系和世界市场中",
+      "C": "中国是一个经济政治发展不平衡的国家",
+      "D": "资本主义制度已经过时"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第二章",
+    "id": "1",
+    "question": "导致太平天国运动爆发的最主要原因是 (  )",
+    "options": {
+      "A": "外国资本主义与中华民族的矛盾",
+      "B": "儒家思想与拜上帝的矛盾",
+      "C": "封建主义与人民大众的矛盾",
+      "D": "满族与汉族的矛盾"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第二章",
+    "id": "2",
+    "question": "最能体现太平天国社会理想和这次农民起义特色的纲领性文件是（）",
+    "options": {
+      "A": "《资政新篇》",
+      "B": "《天朝田亩制度》",
+      "C": "《万大洪告示》",
+      "D": "《原道醒世训》"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第二章",
+    "id": "3",
+    "question": "《资政新篇》较之《天朝田亩制度》更具有历史的进步性,主要是指它(  )",
+    "options": {
+      "A": "更加鲜明地提出不许外邦人干涉中国内政",
+      "B": "明确提出要以法治国,由公众选举官吏",
+      "C": "主张学习西方,最早提出在中国发展资本主义的方案",
+      "D": "促使中国近代第一次思想解放潮流的发生"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第二章",
+    "id": "4",
+    "question": "鲁迅先生回顾历史时说：“中国太难改变了，不是很大的鞭子打在背上。中国 自己是不肯动弹的。”第二次鸦片战争的‘一鞭’使清朝一些有识之士认识到要 利用西方先进生产技术富国强兵。于是开始了（）",
+    "options": {
+      "A": "洋务运动",
+      "B": "戊戌变法",
+      "C": "辛亥革命",
+      "D": "新文化运动"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第二章",
+    "id": "5",
+    "question": "下列关于洋务运动表述不正确的是 （）",
+    "options": {
+      "A": "内忧外患,清政府内部产生洋务派",
+      "B": "师夷长技,洋务派选择资本主义强国",
+      "C": "自强求富,办军工兴民用采用机器生产",
+      "D": "只师长技,破产结局不可避免"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第二章",
+    "id": "6",
+    "question": "清政府内部洋务派与顽固派之间的根本分歧在于（）",
+    "options": {
+      "A": "要不要维护封建的政治制度",
+      "B": "要不要维护封建的伦理纲常",
+      "C": "要不要学习西方的先进生产技术",
+      "D": "要不要抵抗列强的侵略"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第二章",
+    "id": "7",
+    "question": "中国民族资产阶级登上政治舞台的第一次表演是（）",
+    "options": {
+      "A": "戊戌维新运动",
+      "B": "洋务运动",
+      "C": "辛亥革命",
+      "D": "太平天国革命"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第二章",
+    "id": "8",
+    "question": "维新变法运动时期，康有为主张“我朝变法，但采鉴日本”，是指要在政治上 实行（）",
+    "options": {
+      "A": "君主专制",
+      "B": "联邦制",
+      "C": "共和制",
+      "D": "君主立宪制"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第二章",
+    "id": "9",
+    "question": "洋务运动和明治维新都对本国历史进程产生了重要作用，其作用的相同之处是 （）",
+    "options": {
+      "A": "摆脱了民族危机",
+      "B": "走上了资本主义道路",
+      "C": "促进了资本主义发展",
+      "D": "逐步实现了国家富强"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第二章",
+    "id": "10",
+    "question": "1898 年 6 月16日，康有为上书光绪帝说：“皇上勿去旧衙门，而惟增置新衙 门；勿黜革旧大臣，而惟渐擢小臣。多招见才俊之士，不必加其官，而惟委以差 事，赏以卿衔，准其专折奏事足矣。”这段话最能反映出维新派在变法中的态度 是(  )",
+    "options": {
+      "A": "要光绪皇帝加强对顽固官僚的争夺",
+      "B": "要光绪皇帝不要理睬顽固派的立场",
+      "C": "在封建顽固势力面前主张妥协",
+      "D": "不要使更多的维新派人士参与政权"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第三章",
+    "id": "1",
+    "question": "清末“预备立宪”的根本目的在于（  ）",
+    "options": {
+      "A": "延续反动统治",
+      "B": "缓和阶级矛盾",
+      "C": "发展资本主义",
+      "D": "仿效欧美政体"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第三章",
+    "id": "2",
+    "question": "革命派与改良派论战的焦点是（  ）",
+    "options": {
+      "A": "要不要推翻帝制，实行共和",
+      "B": "要不要向西方学习",
+      "C": "要不要以革命手段推翻清王朝",
+      "D": "要不要社会革命"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第三章",
+    "id": "3",
+    "question": "1905 年11 月，孙中山在《民报》发刊词中将中国同盟会的政治纲领概括为 （   ）",
+    "options": {
+      "A": "创立民国、平均地权",
+      "B": "民族主义、民权主义、民生主义",
+      "C": "联俄、联共、扶助农工",
+      "D": "驱除鞑虏、恢复中华、创立合众政府"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第三章",
+    "id": "4",
+    "question": "孙中山认为，西方国家贫富不均，劳资矛盾尖锐，“社会革命将其不远”，中 国应该防患于未然，因此他提出了(  )",
+    "options": {
+      "A": "民粹主义",
+      "B": "民族主义",
+      "C": "民权主义",
+      "D": "民生主义"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第三章",
+    "id": "5",
+    "question": "1903 年邹容写的（  ）是中国近代史上第一部宣传革命和资产阶级共和国 思想的著作。",
+    "options": {
+      "A": "《革命军》",
+      "B": "《驳康有为论革命书》",
+      "C": "《猛回头》",
+      "D": "《警世钟》"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第三章",
+    "id": "6",
+    "question": "武昌起义的导火线是（  ）",
+    "options": {
+      "A": "黄花岗起义",
+      "B": "清末新政失败",
+      "C": "镇南关起义",
+      "D": "保路运动"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第三章",
+    "id": "7",
+    "question": "辛亥革命取得的最大成就是（  ）",
+    "options": {
+      "A": "打击了帝国主义的殖民势力",
+      "B": "推翻了封建帝制",
+      "C": "促进了资本主义的发展",
+      "D": "使人民获得了一些民主自由权利"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第三章",
+    "id": "8",
+    "question": "中国历史上第一部具有资产阶级共和国宪法性质的法典是（  ）",
+    "options": {
+      "A": "《钦定宪法大纲》",
+      "B": "《中华民国临时约法》",
+      "C": "《中华民国约法》",
+      "D": "《试训政纲领》"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第三章",
+    "id": "9",
+    "question": "二十世纪中国发生的第一次历史性巨变是指（  ）",
+    "options": {
+      "A": "国民革命",
+      "B": "北伐战争",
+      "C": "辛亥革命",
+      "D": "抗日战争"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第三章",
+    "id": "10",
+    "question": "辛亥革命失败的根本原因是（  ）",
+    "options": {
+      "A": "民族资产阶级自身的软弱性和妥协性",
+      "B": "资本主义建国方案在中国行不通",
+      "C": "帝国主义的破坏",
+      "D": "封建顽固势力的强大"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第四章",
+    "id": "1",
+    "question": "中国共产党为集中力量领导工人运动而成立的领导机关是（）",
+    "options": {
+      "A": "上海共产主义小组",
+      "B": "中国同盟会",
+      "C": "北京共产主义小组",
+      "D": "中国劳动组合书记部"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第四章",
+    "id": "2",
+    "question": "新文化运动开始的标志是（）",
+    "options": {
+      "A": "陈独秀创办《青年杂志》",
+      "B": "蔡元培出任北大校长",
+      "C": "李大钊加入《新青年》",
+      "D": "提出拥护“德先生”和“赛先生”的口号"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第四章",
+    "id": "3",
+    "question": "中国工人阶级开始以独立的姿态登上政治舞台是在（）中",
+    "options": {
+      "A": "辛亥革命",
+      "B": "新文化运动",
+      "C": "五四运动",
+      "D": "国民革命运动"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第四章",
+    "id": "4",
+    "question": "五四运动的直接导火线是（）",
+    "options": {
+      "A": "北洋军阀的黑暗统治",
+      "B": "俄国十月革命的影响",
+      "C": "巴黎和会上中国外交的失败",
+      "D": "马克思主义的广泛传播"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第四章",
+    "id": "5",
+    "question": "五四爱国运动后，一批左翼青年骨干成为马克思主义的早期信仰者，毛泽东 作为当时湖南学生运动的领导人，曾这样说过：“我第二次到北京期间，读了许 多关于俄国情况的书。我热心的搜寻那时候能找到的为数不多的用中文写的共产 主义书籍。有三本书特别深地铭刻在我的心中，建立起我对马克思主义的信仰。” 这三本书分别是（） ○1《共产党宣言》○2《阶级斗争》○3《德意志意识形态》○4《社会主义史》",
+    "options": {
+      "A": "○1○2○4",
+      "B": "○2○3○4",
+      "C": "○1○3○4",
+      "D": "○1○2○3"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第四章",
+    "id": "6",
+    "question": "中国工人阶级政党最早的组织是在（）建立的",
+    "options": {
+      "A": "北京",
+      "B": "上海",
+      "C": "武汉",
+      "D": "东京"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第四章",
+    "id": "7",
+    "question": "共产党早期组织领导的第一个工会是（）",
+    "options": {
+      "A": "长辛店工人俱乐部",
+      "B": "上海机器工会",
+      "C": "武汉工会",
+      "D": "长沙工会"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第四章",
+    "id": "8",
+    "question": "中国共产党在（   ）上决定共产党员以个人身份加入国民党，以实现国共合 作。",
+    "options": {
+      "A": "二大",
+      "B": "三大",
+      "C": "四大",
+      "D": "一大"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第四章",
+    "id": "9",
+    "question": "1924 年中国国民党第一次全国代表大会的内容不包括以下哪一项（）",
+    "options": {
+      "A": "对“三民主义”做出了新的解释",
+      "B": "确认了共产党员以个人身份加入国民党的原则",
+      "C": "确立了“联俄、联共、扶助农工”的三大革命政策",
+      "D": "提出了无产阶级在民主革命中的领导权问题"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第四章",
+    "id": "10",
+    "question": "大革命失败给中国共产党最深刻的经验教训是（）",
+    "options": {
+      "A": "警惕统一战线内部的野心家",
+      "B": "应当和农民结成巩固的工农联盟",
+      "C": "独立自主的革命领导权",
+      "D": "提出能团结多数的革命口号"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第五章",
+    "id": "1",
+    "question": "1927 年 9 月，毛泽东领导的湘赣边界秋收起义爆发，起义军公开打出了( )",
+    "options": {
+      "A": "“工农红军”旗帜",
+      "B": "“国民革命军”旗帜",
+      "C": "“人民解放军”旗帜",
+      "D": "“工农革命军”旗帜"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第五章",
+    "id": "2",
+    "question": "毛泽东曾经指出:革命要有根据地，好像人要有屁股。人假如没有屁股，便不 能坐下来。要是老走着、老站着，定然不会持久。腿走酸了、站软了，就会倒下 去。这一形象比喻说明：农村革命根据地是中国革命的( )",
+    "options": {
+      "A": "主要形式",
+      "B": "战略阵地",
+      "C": "基本内容",
+      "D": "首要任务"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第五章",
+    "id": "3",
+    "question": "1935 年 12 月，毛泽东系统阐明了党的抗日民族统一战线新政策的著作是( )",
+    "options": {
+      "A": "《星星之火，可以燎原》",
+      "B": "《论持久战》",
+      "C": "《论反对日本帝国主义的策略》",
+      "D": "《中国革命战争的战略问题》"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第五章",
+    "id": "4",
+    "question": "20 世纪 30 年代前期、中期，中国共产党内多次出现“左”倾错误，其原因是 多方面的，而最主要的原因就在于( )",
+    "options": {
+      "A": "党当时还不善于将马克思列宁主义与中国实际正确地结合起来",
+      "B": "八七会议后党内一直存在的浓厚的“左”倾情绪始终未得以认真的清理",
+      "C": "共产国际对中国共产党内部事务的错误干预和瞎指挥",
+      "D": "中国国情的复杂性和特殊性"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第五章",
+    "id": "5",
+    "question": "中国共产党历史上一次生死攸关的转折点，开始形成以毛泽东同志为核心的中 共第一代领导集体的会议是( )",
+    "options": {
+      "A": "1927 年 8 月召开的“八七会议”",
+      "B": "1929 年 12 月召开的“古田会议”",
+      "C": "1931 年 11 月召开的中华苏维埃第一次全国代表大会",
+      "D": "1935 年 1 月召开的“遵义会议”"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第五章",
+    "id": "6",
+    "question": "大革命失败后，中国共产党打响武装反抗国民党反动派第一枪的是( )",
+    "options": {
+      "A": "南昌起义",
+      "B": "湘赣边界秋收起义",
+      "C": "广州起义",
+      "D": "百色起义"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第五章",
+    "id": "7",
+    "question": "毛泽东同志首次提出“没有调查，没有发言权”和“中国革命斗争的胜利要靠 中国同志了解中国情况”等重要思想的著作是( )",
+    "options": {
+      "A": "《井冈山的斗争》",
+      "B": "《中国的红色政权为什么能够存在？》",
+      "C": "《星星之火，可以燎原》",
+      "D": "《反对本本主义》"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第五章",
+    "id": "9",
+    "question": "毛泽东同志在 1927 年 8 月召开的“八七会议”上提出了著名论断( )",
+    "options": {
+      "A": "“一切反动派都是纸老虎”",
+      "B": "“须知政权是由枪杆子中取得的”",
+      "C": "“没有调查，没有发言权”",
+      "D": "“马克思主义必须中国化”"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第五章",
+    "id": "10",
+    "question": "1931 年 11 月，中华苏维埃第一次全国工农兵代表大会在江西瑞金召开，成 立了中华苏维埃共和国临时中央政府，选举( )为主席。",
+    "options": {
+      "A": "毛泽东",
+      "B": "刘少奇",
+      "C": "周恩来",
+      "D": "朱德"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第六章",
+    "id": "1",
+    "question": "日本军国主义势力主张：“惟欲征服支那，必先征服（ ）；如欲征服世界， 必先征服支那。”",
+    "options": {
+      "A": "支那",
+      "B": "满蒙",
+      "C": "世界",
+      "D": "朝鲜"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第六章",
+    "id": "2",
+    "question": "日本策动华北五省即河北、察哈尔、（ ）、山西、山东和北平、天津两市 “防共自治运动”，制造傀儡政权。这就是华北事变。",
+    "options": {
+      "A": "河北",
+      "B": "河南",
+      "C": "绥远",
+      "D": "内蒙"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第六章",
+    "id": "3",
+    "question": "（ ）标志着日本全面侵华战争的开始。",
+    "options": {
+      "A": "华北事变",
+      "B": "九一八事变",
+      "C": "七七事变",
+      "D": "八一三事变"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第六章",
+    "id": "4",
+    "question": "据不完全统计，抗日战争期间，中国军民伤亡人数超过（ ）；按 1937 年 的比价，中国直接经济损失 1000 多亿美元，间接经济损失 5000 多亿美元。",
+    "options": {
+      "A": "3500 万",
+      "B": "1000 万",
+      "C": "5000 万",
+      "D": "2700 万"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第六章",
+    "id": "5",
+    "question": "九一八事变后，中共对蒋介石的态度经历了“反蒋抗日”到（ ）再到“联 蒋抗日”三个阶段。",
+    "options": {
+      "A": "拉蒋抗日",
+      "B": "逼蒋抗日",
+      "C": "劝蒋抗日",
+      "D": "诱蒋抗日"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第六章",
+    "id": "6",
+    "question": "（ ）的和平解决成为时局转换的枢纽，十年内战局面基本结束，国内和平 初步实现。",
+    "options": {
+      "A": "南京事变",
+      "B": "西安事变",
+      "C": "福建事变",
+      "D": "七七事变"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第六章",
+    "id": "7",
+    "question": "抗日民族统一战线以（ ）国共合作为基础。",
+    "options": {
+      "A": "第一次",
+      "B": "第二次",
+      "C": "第三次",
+      "D": "第四次"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第六章",
+    "id": "8",
+    "question": "抗日战争经历了战略防御、（ ）和战略反攻三个阶段。",
+    "options": {
+      "A": "战略扩张",
+      "B": "战略扩展",
+      "C": "战略相持",
+      "D": "战略收缩"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第六章",
+    "id": "9",
+    "question": "战略防御阶段，国民党抗日是（ ）的。",
+    "options": {
+      "A": "消极抗战",
+      "B": "比较努力",
+      "C": "表现一般",
+      "D": "全民抗战"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第六章",
+    "id": "10",
+    "question": "伟大的抗战精神是指中国人民向世界展示了天下兴亡、匹夫有责的爱国情 怀，视死如归、宁死不屈的民族气节，不畏强暴、（ ）的英雄气概，百折 不挠、坚忍不拔的必胜信念。",
+    "options": {
+      "A": "血战到底",
+      "B":"不怕牺牲",
+      "C":"排除万难",
+      "D": "争取胜利"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第七章",
+    "id": "1",
+    "question": "抗战胜利后，美国在中国追求的长期目标是（ ）。",
+    "options": {
+      "A": "支持中国共产党统一中国",
+      "B": "支持民主党派人士统一中国",
+      "C": "阻止共产党完全控制中国",
+      "D": "建立统一的亲美政府"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第七章",
+    "id": "2",
+    "question": "为了避免内战，实现和平建国的方案，1945年8月25日，中共中央在对时局 的宣言中明确提出了（ ）的口号。",
+    "options": {
+      "A": "和平、民主、团结",
+      "B": "团结、进步、民主",
+      "C": "和平、建国、反蒋",
+      "D": "和平、民主、协商"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第七章",
+    "id": "3",
+    "question": "蒋介石在积极准备内战的同时，又表示愿意与中共进行和平谈判。请问以下哪 项不属于蒋介石的目的（ ）。",
+    "options": {
+      "A": "以此敷衍国内外舆论，掩盖其正在进行的内战准备",
+      "B": "诱使中共交出人民军队和解放区政权，以期不战而控制全中国",
+      "C": "真心和中共和平建国",
+      "D": "如果谈判不成，即放手发动内战，并把战争责任转嫁给中国共产党"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第七章",
+    "id": "4",
+    "question": "以下不属于解放战争时期，中国人民解放军发动的三大战役是（ ）。",
+    "options": {
+      "A": "淮海战役",
+      "B": "辽沈战役",
+      "C": "平津战役",
+      "D": "渡江战役"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第七章",
+    "id": "5",
+    "question": "人民解放战争进入夺取全国胜利的决定性阶段的时间是(  )。",
+    "options": {
+      "A": "1946 年秋",
+      "B": "1947 年秋",
+      "C": "1948 年秋",
+      "D": "1949 年秋"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第七章",
+    "id": "6",
+    "question": "1947 年 7 月至 9 月，中国共产党在西柏坡召开全国土地会议，制定和通过了 （   ）。",
+    "options": {
+      "A": "《井冈山土地法》",
+      "B": "《兴国土地法》",
+      "C": "《关于清算、减租及土地问题的指示》",
+      "D": "《中国土地法大纲》"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第七章",
+    "id": "7",
+    "question": "解放战争时期，在国民党统治区形成了以（ ）为先导的人民民主运动，成为 了配合人民解放战争的第二条战线。",
+    "options": {
+      "A": "学生运动",
+      "B": "工人运动",
+      "C": "农民起义",
+      "D": "商人罢市"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第七章",
+    "id": "8",
+    "question": "以下哪次会议规定了中国共产党在全国胜利后在政治、经济、外交方面应当采 取的基本政策？（）",
+    "options": {
+      "A": "中共六届六中全会",
+      "B": "中共七大",
+      "C": "中共七届二中全会",
+      "D": "中共八大"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第七章",
+    "id": "9",
+    "question": "1949 年 6 月，毛泽东发表的系统论述中国共产党建国主张的著作是（）。",
+    "options": {
+      "A": "《新民主主义论》",
+      "B": "《目前形势和我们的任务》",
+      "C": "《论联合政府》",
+      "D": "《论人民民主专政》"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第七章",
+    "id": "10",
+    "question": "抗日战争胜利后，美国实行扶蒋反共政策的根本目的是（）。",
+    "options": {
+      "A": "进一步扩大对华资本输出",
+      "B": "在中国建立稳定统一的全国性政权",
+      "C": "控制中国，推行全球战略",
+      "D": "缓和美苏矛盾，划分势力范围"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第七章",
+    "id": "11",
+    "question": "1945 年 8 月，《大公报》报道毛泽东来到重庆的消息时称：“爱好民主自由 的人士都知道，这是维系中国目前及未来历史和人民幸福的一个喜讯。”这反映 了“爱好民主自由的人士”期盼(  )。",
+    "options": {
+      "A": "国共双方和平协商，创建新中国",
+      "B": "国共双方消除隔阂，共同抗日",
+      "C": "共产党领导人民推翻国民党的统治",
+      "D": "共产党与民主党派合作建立新中国"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第七章",
+    "id": "12",
+    "question": "20 世纪 40 年代，中国出现了一个由民族战争向国内战争过渡阶段，这一阶 段政治斗争的基本内容是（）。",
+    "options": {
+      "A": "振奋人民斗志，消灭国民党反动派",
+      "B": "反对美国对蒋介石的军事援助",
+      "C": "争取和平民主，反对内战独裁",
+      "D": "民主党派积极参加政权建设"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第七章",
+    "id": "13",
+    "question": "1946 年 6 月，国共两党全面内战爆发，其时世人议论纷纭。下列评论中，哪 一种更接近事实本质？（）",
+    "options": {
+      "A": "煮豆燃豆箕，相煎何太急",
+      "B": "楚汉相争，成者为王败者为寇",
+      "C": "“五四”以来，社会势力演化之必然",
+      "D": "玩偶皮影之戏，列强其后也"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第七章",
+    "id": "14",
+    "question": "1946 年全国内战爆发的起点是国民党军进攻（ ）。",
+    "options": {
+      "A": "中原解放区",
+      "B": "华北解放区",
+      "C": "华东解放区",
+      "D": "山东解放区"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第七章",
+    "id": "15",
+    "question": "解放战争时期，1947年6月底，刘邓大军挺进大别山，揭开了（）。",
+    "options": {
+      "A": "战略进攻的序幕",
+      "B": "战略决战的序幕",
+      "C": "战略防御的序幕",
+      "D": "战略相持的序幕"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第七章",
+    "id": "16",
+    "question": "毛泽东说：“如果我们能够普遍彻底地解决土地问题，我们就获得了足以战 胜一切的敌人的最基本条件。”这里的“最基本条件”是（）。",
+    "options": {
+      "A": "建立稳固的革命根据地",
+      "B": "建立党领导下的人民军队",
+      "C": "取得占人口最多的广大农民的拥护、支持",
+      "D": "实行“工农武装割据”"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第七章",
+    "id": "17",
+    "question": "毛泽东在中共七届二中全会上的报告内容不包括（）。",
+    "options": {
+      "A": "从现在起，党的工作重心必须由乡村移到城市",
+      "B": "在城市工作中党的工作以恢复和发展生产为一切工作的中心",
+      "C": "要警惕资产阶级“糖衣炮弹”的袭击",
+      "D": "在农村实行减租减息政策"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第七章",
+    "id": "18",
+    "question": "我国的政体是（ ）。",
+    "options": {
+      "A": "多党合作与政治协商制度",
+      "B": "人民民主专政的国家制度",
+      "C": "人民代表大会制度",
+      "D": "民族区域自治制度"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第七章",
+    "id": "19",
+    "question": "确定以《义勇军进行曲》为代国歌始于（ ）。",
+    "options": {
+      "A": "《共同纲领》",
+      "B": "《中华人民共和国宪法》",
+      "C": "中共七届二中全会",
+      "D": "党的七大会议"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第八章",
+    "id": "1",
+    "question": "中国开始由新民主主义向社会主义过渡的标志事件是（）。",
+    "options": {
+      "A": "五四运动的爆发",
+      "B": "中国共产党的诞生",
+      "C": "抗日战争的胜利",
+      "D": "中华人民共和国成立"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第八章",
+    "id": "2",
+    "question": "标志着中国新民主主义革命取得伟大胜利的事件是 (  )。",
+    "options": {
+      "A": "三大战役取得胜利",
+      "B": "渡江战役取得胜利",
+      "C": "中华人民共和国成立",
+      "D": "西藏和平解放"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第八章",
+    "id": "3",
+    "question": "建国初期，分散、落后的小农经济束缚着农村生产力的发展，难以满足国家经 济建设发展的需要。对此，国家采取的相应措施是(  )。",
+    "options": {
+      "A": "公布过渡时期总路线",
+      "B": "进行土地改革",
+      "C": "建立农业生产合作社",
+      "D": "开展人民公社化运动"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第八章",
+    "id": "4",
+    "question": "我国开始进入社会主义初级阶段的标志是（）。",
+    "options": {
+      "A": "中华人民共和国成立",
+      "B": "社会主义改造基本完成",
+      "C": "中共八大召开",
+      "D": "十一届三中全会召开"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第八章",
+    "id": "5",
+    "question": "1956 年到1966 年，我国处于（）。",
+    "options": {
+      "A": "基本完成社会主义改造时期",
+      "B": "全面建设社会主义时期",
+      "C": "“文化大革命”时期",
+      "D": "社会主义现代化建设时期"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第八章",
+    "id": "6",
+    "question": "过渡时期总路线的主体是（）。",
+    "options": {
+      "A": "实现社会主义工业化",
+      "B": "实现对农业的社会主义改造",
+      "C": "实现对手工业的社会主义改造",
+      "D": "实现对资本主义工商业的社会主义改造"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第八章",
+    "id": "7",
+    "question": "我国对资本主义工商业进行社会主义改造所采取的国家资本主义高级形式是 （）。",
+    "options": {
+      "A": "委托加工",
+      "B": "计划订货",
+      "C": "统购包销",
+      "D": "公私合营"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第八章",
+    "id": "8",
+    "question": "中国民族资产阶级在社会主义改造时期仍然具有两面性，其表现为（）。",
+    "options": {
+      "A": "革命性和妥协性",
+      "B": "主动性和被动性",
+      "C": "剥削工人的一面和接受改造的一面",
+      "D": "进步性和顽固性"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第八章",
+    "id": "9",
+    "question": "从中华人民共和国成立，到（    ）基本完成，这是一个过渡时期。党在这 个过渡时期的总路线和总任务，是要在一个相当长的时期内，逐步实现国家的社 会主义工业化，并逐步实现国家对农业、对手工业和对资本主义工商业的社会主 义改造。",
+    "options": {
+      "A": "社会主义改造",
+      "B": "社会主义建设",
+      "C": "改革开放",
+      "D": "新民主主义社会"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第八章",
+    "id": "10",
+    "question": "过渡时期总路线体现了（ ）和社会主义改造的紧密结合，体现了解放生产力 与发展生产力、变革生产关系与发展生产力的有机统一。",
+    "options": {
+      "A": "社会主义建设",
+      "B": "社会主义工业化",
+      "C": "改革开放",
+      "D": "社会主义阶段"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第八章",
+    "id": "11",
+    "question": "中国农民在土改基础上所发扬起来的生产积极性，集中地表现在两种积极性 上，即（ ）的积极性和劳动互助的积极性。",
+    "options": {
+      "A": "集体经济",
+      "B": "国营经济",
+      "C": "个体经济",
+      "D": "混合经济"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第八章",
+    "id": "12",
+    "question": "按照（ ）和互利的原则，发展农民劳动互助的积极性。",
+    "options": {
+      "A": "帮助",
+      "B": "自愿",
+      "C": "强制",
+      "D": "奖赏"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第八章",
+    "id": "13",
+    "question": "中国农业社会主义改造经历了互助组、（ ）、高级社三个阶段。",
+    "options": {
+      "A": "初级社",
+      "B": "中级社",
+      "C": "自耕社",
+      "D": "人民公社"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第八章",
+    "id": "14",
+    "question": "由手工业生产合作小组、手工业（ ）到手工业生产合作社,这是对手工 业进行社会主义改造的三个阶段。",
+    "options": {
+      "A": "销售小组",
+      "B": "供销合作社",
+      "C": "生产联合社",
+      "D": "供销小组"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第八章",
+    "id": "15",
+    "question": "（ ）是改造资本主义工商业和逐步完成向社会主义过渡的必经之路。",
+    "options": {
+      "A": "垄断资本主义",
+      "B": "自由资本主义",
+      "C": "私人资本主义",
+      "D": "国家资本主义"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第八章",
+    "id": "16",
+    "question": "在企业利润分配上实行“四马分肥”，即所得税占 30%，工人福利占 15%，企 业公积金占 30%，（ ）占 25%。",
+    "options": {
+      "A": "资方股息红利",
+      "B": "资方生产资料",
+      "C": "资方工资",
+      "D": "工人工资"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第八章",
+    "id": "17",
+    "question": "对资产阶级实行（ ），是马克思、恩格所提出的设想。十月革命后，列 宁打算在俄国对“文明的资本家”采取这种做法，但俄国资产阶级不接受。",
+    "options": {
+      "A": "打击",
+      "B": "没收",
+      "C": "劝诫",
+      "D": "赎买"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第八章",
+    "id": "18",
+    "question": "在改造的后期存在要求过急、工作过粗、改变过快，以及在生产资料所有制 形式和经济成分上过于（ ）等缺点。",
+    "options": {
+      "A": "复杂多变",
+      "B":"简单划一",
+      "C":"粗暴统一",
+      "D": "一律看齐"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第八章",
+    "id": "19",
+    "question": "1956年毛泽东作的《论十大关系》的报告，是探索中国社会主义建设道路 的重要理论成果。《论十大关系》围绕的基本方针是（ ）。",
+    "options": {
+      "A": "坚持百花齐放、百家争鸣",
+      "B": "调动一切积极因素，把我国建设成为一个强大的社会主义国家",
+      "C": "调整、巩固、充实、提高",
+      "D": "中国共产党同民主党派长期共存、互相监督"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第八章",
+    "id": "20",
+    "question": "中共八大提出的我国经济建设方针是（ ）。",
+    "options": {
+      "A": "慢一点、稳一点",
+      "B": "力争高速度压倒一切",
+      "C": "既反保守又反冒进，在综合平衡中稳步前进",
+      "D": "大干快上，超英赶美"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第八章",
+    "id": "21",
+    "question": "1956 年 9 月党的八大提出的我国国内的主要矛盾是（ ）。",
+    "options": {
+      "A": "无产阶级同资产阶级的矛盾",
+      "B": "人民大众同反革命残余势力的矛盾",
+      "C": "开展社会主义道路与资本主义道路的决战",
+      "D": "人民对于经济文化迅速发展的需要同当前经济文化不能满足人民需要的状况 之间的矛盾"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第八章",
+    "id": "22",
+    "question": "毛泽东在《关于正确处理人民内部矛盾的问题》讲话中指出，社会主义社 会的基本矛盾是（ ）。",
+    "options": {
+      "A": "人民对于建立先进的工业国的要求同落后的农业国现实之间的矛盾",
+      "B": "生产力与生产关系、经济基础与上层建筑之间的矛盾",
+      "C": "无产阶级和资产阶级的矛盾",
+      "D": "人民内部矛盾"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第八章",
+    "id": "23",
+    "question": "1958年5月中共八大二次会议通过的建设社会主义总路线是（ ）。",
+    "options": {
+      "A": "一个中心、两个基本点",
+      "B": "鼓足干劲、力争上游、多快好省地建设社会主义",
+      "C": "一化三改",
+      "D": "无产阶级领导的，人民大众的，反对帝国主义、封建主义和官僚资本主义的 革命"
+    },
+    "answer": "B"
+  },
+  {
+    "chapter": "第八章",
+    "id": "24",
+    "question": "1958年9月，全国范围内掀起了人民公社化运动，人民公社的基本特点是 （ ）。",
+    "options": {
+      "A": "一大二公",
+      "B": "平均分配",
+      "C": "一平二调",
+      "D": "政社合一"
+    },
+    "answer": "A"
+  },
+  {
+    "chapter": "第八章",
+    "id": "25",
+    "question": "“文化大革命”开始的标志是（ ）的发表。",
+    "options": {
+      "A": "《二十三条》",
+      "B": "《前十条》",
+      "C": "《十六条》",
+      "D": "《五一六通知》"
+    },
+    "answer": "D"
+  },
+  {
+    "chapter": "第八章",
+    "id": "26",
+    "question": "新中国成功地爆炸第一颗原子弹的时间是（ ）",
+    "options": {
+      "A": "1967 年6 月",
+      "B": "1966 年10 月",
+      "C": "1964 年10 月",
+      "D": "1970 年4 月"
+    },
+    "answer": "C"
+  },
+  {
+    "chapter": "第八章",
+    "id": "27",
+    "question": "新中国恢复在联合国合法席位是在（ ）",
+    "options": {
+      "A": "1971 年",
+      "B": "1978 年",
+      "C": "1966 年",
+      "D": "1949 年"
+    },
+    "answer": "A"
+  }
+];
+
+    // ---------- 全局状态 ----------
+    let currentMode = 'sequential';
+    let currentQuestionList = [];
+    let currentIndex = 0;
+    let userAnswers = {};            // 记录已提交答案 { indexInBank: "A" } 使用原题库索引
+    let wrongBook = new Set();       // 存储错题的题库索引
+    let selectedOption = null;
+    let answerRevealed = false;
+    let lastSubmitCorrect = null;
+
+    // DOM元素
+    const qNumLabel = document.getElementById('questionNumLabel');
+    const qText = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const feedbackMsg = document.getElementById('feedbackMsg');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const checkAnswerBtn = document.getElementById('checkAnswerBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const applyModeBtn = document.getElementById('applyModeBtn');
+    const resetProgressBtn = document.getElementById('resetProgressBtn');
+    const paramInput = document.getElementById('paramInput');
+    const progressText = document.getElementById('progressText');
+    const modeBadge = document.getElementById('modeBadge');
+    const wrongCountSpan = document.getElementById('wrongCount');
+    const modeButtons = document.querySelectorAll('.mode-btn');
+    const chapterDisplay = document.getElementById('chapterDisplay');
+
+    // ---------- 存储功能 ----------
+    function saveToStorage() {
+      const data = {
+        userAnswers: userAnswers,
+        wrongBook: Array.from(wrongBook),
+        currentMode: currentMode,
+        currentListIndices: currentQuestionList.map(q => QUESTION_BANK.indexOf(q)),
+        currentIndex: currentIndex
+      };
+      localStorage.setItem('modern_history_quiz_v2', JSON.stringify(data));
+    }
+
+    function loadFromStorage() {
+      const raw = localStorage.getItem('modern_history_quiz_v2');
+      if (!raw) return false;
+      try {
+        const data = JSON.parse(raw);
+        userAnswers = data.userAnswers || {};
+        wrongBook = new Set(data.wrongBook || []);
+        currentMode = data.currentMode || 'sequential';
+        const indices = data.currentListIndices || [];
+        currentQuestionList = indices.map(idx => QUESTION_BANK[idx]).filter(Boolean);
+        if (currentQuestionList.length === 0) currentQuestionList = [...QUESTION_BANK];
+        currentIndex = (data.currentIndex !== undefined && data.currentIndex < currentQuestionList.length) ? data.currentIndex : 0;
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function clearStorage() {
+      localStorage.removeItem('modern_history_quiz_v2');
+    }
+
+    function updateWrongCountUI() {
+      wrongCountSpan.textContent = wrongBook.size;
+    }
+
+    // ---------- 生成题目列表 ----------
+    function generateQuestionList(mode, paramValue) {
+      const all = [...QUESTION_BANK];
+      if (all.length === 0) return [];
+      switch (mode) {
+        case 'sequential':
+          return [...all];
+        case 'random':
+          const count = Math.min(parseInt(paramValue) || 5, all.length);
+          const shuffled = [...all].sort(() => Math.random() - 0.5);
+          return shuffled.slice(0, count);
+        case 'unanswered':
+          const unanswered = all.filter((q, idx) => !(idx in userAnswers));
+          if (unanswered.length === 0) {
+            alert('🎉 所有题目都已做过！');
+            return [...all];
+          }
+          return unanswered;
+        case 'wrongbook':
+          const wrongList = Array.from(wrongBook).map(idx => all[idx]).filter(Boolean);
+          if (wrongList.length === 0) {
+            alert('📭 错题本为空');
+            return [...all];
+          }
+          return wrongList;
+        case 'from':
+          let startId = parseInt(paramValue);
+          if (isNaN(startId) || startId < 1) startId = 1;
+          // 按原顺序从第startId题开始（索引startId-1）
+          return all.slice(startId - 1);
+        default:
+          return [...all];
+      }
+    }
+
+    function applyMode(mode, param) {
+      const newList = generateQuestionList(mode, param);
+      if (newList.length === 0) {
+        alert('没有题目，请检查题库。');
+        return;
+      }
+      currentMode = mode;
+      currentQuestionList = newList;
+      currentIndex = 0;
+      selectedOption = null;
+      answerRevealed = false;
+      lastSubmitCorrect = null;
+      renderCurrentQuestion();
+      updateNavButtons();
+      updateModeUI();
+      saveToStorage();
+    }
+
+    function updateModeUI() {
+      modeButtons.forEach(btn => {
+        const btnMode = btn.getAttribute('data-mode');
+        btn.classList.toggle('active', btnMode === currentMode);
+      });
+      const modeNames = {
+        sequential: '顺序模式',
+        random: '随机模式',
+        unanswered: '未做题模式',
+        wrongbook: '错题本模式',
+        from: '从题号开始'
+      };
+      modeBadge.textContent = modeNames[currentMode] || currentMode;
+      if (currentMode === 'random') paramInput.placeholder = '题目数量';
+      else if (currentMode === 'from') paramInput.placeholder = '起始题号';
+      else paramInput.placeholder = '无需参数';
+    }
+
+    // ---------- 渲染当前题目 ----------
+    function renderCurrentQuestion() {
+      if (!currentQuestionList.length || currentIndex >= currentQuestionList.length || currentIndex < 0) {
+        qNumLabel.textContent = '无题目';
+        qText.textContent = '暂无题目';
+        optionsContainer.innerHTML = '';
+        feedbackMsg.innerHTML = '';
+        progressText.textContent = '0/0';
+        chapterDisplay.style.display = 'none';
+        return;
+      }
+
+      const q = currentQuestionList[currentIndex];
+      const total = currentQuestionList.length;
+      const bankIndex = QUESTION_BANK.indexOf(q);
+      qNumLabel.textContent = `第 ${currentIndex + 1} / ${total} 题`;
+      qText.textContent = q.question;
+      progressText.textContent = `${currentIndex + 1}/${total}`;
+
+      // 章节显示
+      if (q.chapter) {
+        chapterDisplay.style.display = 'inline-block';
+        chapterDisplay.textContent = q.chapter;
+      } else {
+        chapterDisplay.style.display = 'none';
+      }
+
+      // 渲染选项
+      const optionKeys = ['A', 'B', 'C', 'D'];
+      let html = '';
+      optionKeys.forEach(key => {
+        if (q.options[key]) {
+          html += `
+            <div class="option-item" data-option="${key}">
+              <input type="radio" name="questionOption" value="${key}" id="radio-${key}">
+              <label for="radio-${key}" style="flex:1; cursor:pointer;"><strong>${key}.</strong> ${q.options[key]}</label>
+            </div>
+          `;
+        }
+      });
+      optionsContainer.innerHTML = html;
+
+      // 绑定选项点击事件
+      document.querySelectorAll('.option-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+          if (answerRevealed) {
+            alert('本题已提交/查看答案，请切换题目。');
+            return;
+          }
+          const radio = this.querySelector('input[type="radio"]');
+          if (radio) {
+            radio.checked = true;
+            selectedOption = radio.value;
+          }
+        });
+      });
+
+      // 恢复已提交状态
+      const submittedAnswer = userAnswers[bankIndex];
+      if (submittedAnswer !== undefined) {
+        selectedOption = submittedAnswer;
+        const radioBtn = document.getElementById(`radio-${submittedAnswer}`);
+        if (radioBtn) radioBtn.checked = true;
+        const correctAns = q.answer;
+        const isCorrect = (submittedAnswer === correctAns);
+        applyOptionColors(q, submittedAnswer, true);
+        answerRevealed = true;
+        lastSubmitCorrect = isCorrect;
+        feedbackMsg.innerHTML = isCorrect ? '✅ 回答正确！' : `❌ 回答错误。正确答案是 ${correctAns}`;
+        feedbackMsg.style.color = isCorrect ? '#2e6b2e' : '#b33';
+      } else {
+        selectedOption = null;
+        answerRevealed = false;
+        lastSubmitCorrect = null;
+        document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+        document.querySelectorAll('.option-item').forEach(opt => {
+          opt.classList.remove('selected-wrong', 'selected-correct', 'show-correct-answer');
+        });
+        feedbackMsg.innerHTML = '';
+      }
+    }
+
+    function applyOptionColors(question, chosenOption, isSubmitted = true) {
+      const correct = question.answer;
+      document.querySelectorAll('.option-item').forEach(item => {
+        const optKey = item.getAttribute('data-option');
+        item.classList.remove('selected-wrong', 'selected-correct', 'show-correct-answer');
+        if (isSubmitted) {
+          if (optKey === chosenOption && optKey === correct) {
+            item.classList.add('selected-correct');
+          } else if (optKey === chosenOption && optKey !== correct) {
+            item.classList.add('selected-wrong');
+          } else if (optKey === correct) {
+            item.classList.add('show-correct-answer');
+          }
+        }
+      });
+    }
+
+    // 提交
+    function handleSubmit() {
+      if (!currentQuestionList.length || currentIndex >= currentQuestionList.length) return;
+      const q = currentQuestionList[currentIndex];
+      if (!selectedOption) {
+        alert('请先选择一个选项！');
+        return;
+      }
+      const bankIndex = QUESTION_BANK.indexOf(q);
+      const isCorrect = (selectedOption === q.answer);
+      userAnswers[bankIndex] = selectedOption;
+      if (isCorrect) {
+        wrongBook.delete(bankIndex);
+      } else {
+        wrongBook.add(bankIndex);
+      }
+      answerRevealed = true;
+      lastSubmitCorrect = isCorrect;
+      applyOptionColors(q, selectedOption, true);
+      feedbackMsg.innerHTML = isCorrect ? '✅ 回答正确！' : `❌ 回答错误。正确答案是 ${q.answer}`;
+      feedbackMsg.style.color = isCorrect ? '#2e6b2e' : '#b33';
+      updateWrongCountUI();
+      saveToStorage();
+      updateNavButtons();
+    }
+
+    // 查答案
+    function handleCheckAnswer() {
+      if (!currentQuestionList.length || currentIndex >= currentQuestionList.length) return;
+      const q = currentQuestionList[currentIndex];
+      const correct = q.answer;
+      document.querySelectorAll('.option-item').forEach(item => {
+        item.classList.remove('selected-wrong', 'selected-correct', 'show-correct-answer');
+        if (item.getAttribute('data-option') === correct) {
+          item.classList.add('show-correct-answer');
+        }
+      });
+      if (selectedOption && selectedOption !== correct) {
+        const wrongItem = document.querySelector(`.option-item[data-option="${selectedOption}"]`);
+        if (wrongItem) wrongItem.classList.add('selected-wrong');
+      }
+      feedbackMsg.innerHTML = `🔎 正确答案是：${correct}`;
+      feedbackMsg.style.color = '#2e6b2e';
+      answerRevealed = true;
+    }
+
+    function goToPrevious() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        resetQuestionState();
+        renderCurrentQuestion();
+        updateNavButtons();
+        saveToStorage();
+      }
+    }
+
+    function goToNext() {
+      if (currentIndex < currentQuestionList.length - 1) {
+        currentIndex++;
+        resetQuestionState();
+        renderCurrentQuestion();
+        updateNavButtons();
+        saveToStorage();
+      }
+    }
+
+    function resetQuestionState() {
+      selectedOption = null;
+      answerRevealed = false;
+      lastSubmitCorrect = null;
+    }
+
+    function updateNavButtons() {
+      prevBtn.disabled = (currentIndex === 0);
+      nextBtn.disabled = (currentIndex >= currentQuestionList.length - 1);
+    }
+
+    function resetAllProgress() {
+      if (confirm('确定清除所有做题记录和错题本吗？')) {
+        userAnswers = {};
+        wrongBook.clear();
+        clearStorage();
+        currentMode = 'sequential';
+        currentQuestionList = [...QUESTION_BANK];
+        currentIndex = 0;
+        resetQuestionState();
+        renderCurrentQuestion();
+        updateNavButtons();
+        updateModeUI();
+        updateWrongCountUI();
+        paramInput.value = '5';
+        saveToStorage();
+      }
+    }
+
+    // 事件绑定
+    prevBtn.addEventListener('click', goToPrevious);
+    nextBtn.addEventListener('click', goToNext);
+    submitBtn.addEventListener('click', handleSubmit);
+    checkAnswerBtn.addEventListener('click', handleCheckAnswer);
+
+    applyModeBtn.addEventListener('click', () => {
+      applyMode(currentMode, paramInput.value.trim());
+    });
+
+    resetProgressBtn.addEventListener('click', resetAllProgress);
+
+    modeButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const mode = this.getAttribute('data-mode');
+        if (mode === currentMode) return;
+        modeButtons.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentMode = mode;
+        updateModeUI();
+        if (mode === 'random') paramInput.value = '5';
+        else if (mode === 'from') paramInput.value = '1';
+        else paramInput.value = '';
+      });
+    });
+
+    // 初始化
+    function initialize() {
+      const hasStored = loadFromStorage();
+      if (!hasStored) {
+        currentMode = 'sequential';
+        currentQuestionList = [...QUESTION_BANK];
+        currentIndex = 0;
+        userAnswers = {};
+        wrongBook.clear();
+        paramInput.value = '5';
+      }
+      if (!currentQuestionList.length) {
+        currentQuestionList = [...QUESTION_BANK];
+        currentIndex = 0;
+      }
+      if (currentIndex >= currentQuestionList.length) currentIndex = 0;
+      resetQuestionState();
+      renderCurrentQuestion();
+      updateNavButtons();
+      updateModeUI();
+      updateWrongCountUI();
+      if (currentMode === 'random') paramInput.value = currentQuestionList.length;
+      else if (currentMode === 'from') paramInput.value = (currentQuestionList[0] ? QUESTION_BANK.indexOf(currentQuestionList[0]) + 1 : 1);
+      else paramInput.value = '';
+    }
+
+    initialize();
+    window.addEventListener('beforeunload', () => saveToStorage());
+  })();
+</script>
+</body>
+</html>
